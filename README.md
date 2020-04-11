@@ -13,5 +13,5 @@ Kindly reach out at rajatmodi62@gmail.com
 
 # Credits 
 
-@SRK for his amazing work on Winning Solutions\ 
+@SRK for his amazing work on Winning Solutions\
 @Pudae, 3rd place, HPA
