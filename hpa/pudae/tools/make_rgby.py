@@ -1,3 +1,4 @@
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -10,8 +11,14 @@ import tqdm
 import scipy.misc as misc
 import numpy as np
 
+# there are 4 types of filters in an image
+# protein, nucleus, mi crotubules, endoplassmic reticulum
+
+#for inference only green filter is to be used.
+
 
 def load_ids(input_dir):
+
     red_filenames = glob.glob(input_dir + '/*_red.png')
     green_filenames = glob.glob(input_dir + '/*_green.png')
     blue_filenames = glob.glob(input_dir + '/*_blue.png')
@@ -31,6 +38,7 @@ def process(id_lists, output_dir):
         blue_filename = id_str + '_blue.png'
         yellow_filename = id_str + '_yellow.png'
 
+        #path of all the ids should exist, otherwise continue
         if not os.path.exists(red_filename) or \
            not os.path.exists(green_filename) or \
            not os.path.exists(blue_filename) or \
@@ -45,6 +53,7 @@ def process(id_lists, output_dir):
         stacked = np.stack([red, green, blue, yellow], axis=2)
 
         misc.imsave(output_filename, stacked)
+        #this is not needed, he is saving and again reading :-)
         result = misc.imread(output_filename)
 
 
@@ -61,6 +70,7 @@ def parse_args():
 
 def main():
     args = parse_args()
+    #assert checks that LHS and RHS are true
     assert args.input_dir is not None
     assert args.output_dir is not None
 

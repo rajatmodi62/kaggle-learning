@@ -4,6 +4,7 @@ from __future__ import print_function
 
 import os
 import errno
+#multiprocessing for downloading multiple images
 from multiprocessing.pool import Pool
 from tqdm import tqdm
 import requests
@@ -14,8 +15,10 @@ from PIL import Image
 
 # from https://www.kaggle.com/c/human-protein-atlas-image-classification/discussion/69984#437386
 def download_single_image(i, base_url, save_dir, image_size):
+    #resize all images to 512,download them to directory
     colors = ['red', 'green', 'blue', 'yellow']
     img_id = i.split('_', 1)
+
     for color in colors:
         img_path = img_id[0] + '/' + img_id[1] + '_' + color + '.jpg'
         img_name = i + '_' + color + '.png'
@@ -58,6 +61,7 @@ def download(pid, image_list, base_url, save_dir, image_size=(512, 512)):
 
 def main():
     # Parameters
+    #num of processeds  to  use for downloading
     process_num = 24
     image_size = (512, 512)
     url = 'http://v18.proteinatlas.org/images/'
@@ -68,10 +72,15 @@ def main():
 
     print('Parent process %s.' % os.getpid())
     img_list = list(pd.read_csv(csv_path)['Id'])
+    #split the ids into the processes
     img_splits = np.array_split(img_list, process_num)
     assert sum([len(v) for v in img_splits]) == len(img_list)
+
+    #
     p = Pool(process_num)
     for i, split in enumerate(img_splits):
+        #first parameter function
+        #second param are args to that.
         p.apply_async(
             download, args=(str(i), list(split), url, save_dir, image_size)
         )

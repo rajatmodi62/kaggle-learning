@@ -1,3 +1,9 @@
+
+#this code  is fro stratified splits into 5 fold cv
+#pudae sir uses two types of splits
+# one for normal training
+# one for small augmeentation search
+# what is the meaning of small ?
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -44,7 +50,7 @@ def make_examples_dict(df, use_external):
 
         if len(ids) == 0:
             continue
-            
+
         labels = [int(l) for l in row['Target'].split(' ')]
         if len(ids) > 1:
             dup_examples_dict[ids] = set(labels)
@@ -186,4 +192,3 @@ def main():
 
 if __name__ == '__main__':
   main()
-

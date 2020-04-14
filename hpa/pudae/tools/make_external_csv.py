@@ -6,7 +6,7 @@ import os
 import argparse
 import pandas as pd
 
-
+#scan the  directory, create a csv containing external files and their labels
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--external_images_dir', dest='external_images_dir',
